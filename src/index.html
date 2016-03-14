@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  <script src="http://localhost:{{ PORT }}/webpack-dev-server.js"></script>
+{% endblock %}
+
+{% block afterbody %}
+  <div id="app">%%body%%</div>
+  <script src="http://localhost:{{ PORT }}/static/app.js"></script>
+{% endblock %}
