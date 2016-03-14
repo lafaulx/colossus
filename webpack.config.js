@@ -21,7 +21,11 @@ export default {
   },
 
   resolve: {
-    modulesDirectories: ['src/js', 'src/css', 'node_modules'],
+    modulesDirectories: [
+      'node_modules',
+      'src/js',
+      'src/css',
+    ],
     extensions: ['', '.js', '.scss'],
   },
 
@@ -31,8 +35,8 @@ export default {
       exclude: /node_modules/,
       loaders: ['react-hot', `babel?${query}`],
     }, {
-      test: /\.scss/,
-      loader: 'css!postcss!sass',
+      test: /\.scss$/,
+      loader: 'style!css?-minimize!postcss!sass',
     }],
   },
 

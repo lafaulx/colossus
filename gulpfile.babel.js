@@ -15,7 +15,9 @@ gulp.task('html', () => {
   const files = [path.join(SRC_ROOT, 'index.html')];
   const context = {
     path: SRC_ROOT,
-    PORT: config.DEV_SERVER_PORT,
+    data: {
+      PORT: config.DEV_SERVER_PORT,
+    },
   };
 
   nunjucks.configure(SRC_ROOT, {
