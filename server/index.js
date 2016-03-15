@@ -22,6 +22,7 @@ const app = koa();
 
 app.context.render = koaNunjucks({
   ext: 'html',
+  writeResponse: false,
   path: path.join(__dirname, '..', '/build'),
   nunjucksConfig: {
     tags: {
