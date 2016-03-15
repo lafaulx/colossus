@@ -6,5 +6,6 @@
 
 {% block afterbody %}
   <div id="app">%% body | safe %%</div>
+  %% script | safe %%
   <script src="http://localhost:{{ PORT }}/static/app.js"></script>
 {% endblock %}
