@@ -2,10 +2,12 @@
 
 {% block extrahead %}
   <script src="http://localhost:{{ PORT }}/webpack-dev-server.js"></script>
+  <script type="text/javascript">
+    window.__initialState__ = %% state | safe %%;
+  </script>
 {% endblock %}
 
 {% block afterbody %}
   <div id="app">%% body | safe %%</div>
-  %% script | safe %%
   <script src="http://localhost:{{ PORT }}/static/app.js"></script>
 {% endblock %}

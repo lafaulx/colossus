@@ -17,8 +17,9 @@ const logger = createLogger({
   hostname: config.NODEJS_ADDR,
 });
 
-const app = koa();
+process.env.API_ORIGIN = config.API_ORIGIN;
 
+const app = koa();
 
 app.context.render = koaNunjucks({
   ext: 'html',

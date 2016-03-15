@@ -2,34 +2,43 @@ require('babel-register')({
   presets: ['es2015', 'react'],
 });
 
+const serialize = require('serialize-javascript');
 const React = require('react');
-const renderToString = require('react-dom/server').renderToString;
 const ReactRouter = require('react-router');
-const AsyncPropsReq = require('async-props');
+const Provider = require('react-redux').Provider;
+const renderToString = require('react-dom/server').renderToString;
+const syncHistoryWithStore = require('react-router-redux').syncHistoryWithStore;
 
 const routes = require('../../src/js/routes').default;
+const configureStore = require('../../src/js/store').configureStore;
 
 const match = ReactRouter.match;
-const loadPropsOnServer = AsyncPropsReq.loadPropsOnServer;
-const AsyncProps = AsyncPropsReq.default;
+const RouterContext = ReactRouter.RouterContext;
+const createMemoryHistory = ReactRouter.createMemoryHistory;
 
 module.exports = function *ssr() {
-  const data = yield new Promise((resolve) => {
-    match({ routes, location: this.url }, (errMatch, redirect, renderProps) => {
-      loadPropsOnServer(renderProps, {}, (errAsync, asyncProps, script) => {
-        const handlerFactory = React.createFactory(AsyncProps);
-        const ctx = Object.assign({}, renderProps, asyncProps);
-        const body = renderToString(handlerFactory(ctx));
+  const memoryHistory = createMemoryHistory(this.url);
+  const store = configureStore(memoryHistory);
+  const history = syncHistoryWithStore(memoryHistory, store);
 
-        resolve({
-          body, script,
-        });
+  const data = yield new Promise((resolve) => {
+    match({ history, routes, location: this.url }, (error, redirectLocation, renderProps) => {
+      const providerFactory = React.createFactory(Provider);
+      const routerContextFactory = React.createFactory(RouterContext);
+
+      const body = renderToString(providerFactory({
+        store,
+      }, routerContextFactory(renderProps)));
+
+      resolve({
+        body,
+        state: serialize(store.getState()),
       });
     });
   });
 
   yield this.render('index', {
     body: data.body,
-    script: data.script,
+    state: data.state,
   });
 };

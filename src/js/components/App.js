@@ -8,7 +8,7 @@ export default function App(props) {
       <h1>Colossus</h1>
       <ul role="nav">
         <li><IndexLink to="/" activeClassName="active">Index</IndexLink></li>
-        <li><Link to="/counter" activeClassName="active">Counter</Link></li>
+        <li><Link to="counter" activeClassName="active">Counter</Link></li>
       </ul>
 
       {props.children}

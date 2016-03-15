@@ -1,29 +1,30 @@
 import React, { PropTypes } from 'react';
-require('isomorphic-fetch');
+import { connect } from 'react-redux';
+import { increment, decrement } from '../actions/counter';
 
-class Counter extends React.Component {
-  static loadProps(params, cb) {
-    fetch('http://localhost:3000/api/counter')
-    .then((response) => response.json())
-    .then((counter) => {
-      cb(null, {
-        counter,
-      });
-    });
-  }
-
-  render() {
-    const { counter } = this.props;
-    return (
-      <div>
-        Counter: {counter}
-      </div>
-    );
-  }
+function Counter({ counter, onIncrement, onDecrement }) {
+  return (
+    <div>
+      Counter: {counter}
+      <button onClick={function onIncrementClick() { onIncrement(); }}>Increment</button>
+      <button onClick={function onDecrementClick() { onDecrement(); }}>Decrement</button>
+    </div>
+  );
 }
 
 Counter.propTypes = {
   counter: PropTypes.number.isRequired,
+  onIncrement: PropTypes.func.isRequired,
+  onDecrement: PropTypes.func.isRequired,
 };
 
-export default Counter;
+const mapStateToProps = (state) => ({
+  counter: state.counter,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onIncrement: () => {dispatch(increment);},
+  onDecrement: () => {dispatch(decrement);},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
