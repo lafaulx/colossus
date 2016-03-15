@@ -1,8 +1,6 @@
 'use strict';
 
-const routes = require('koa-router')({
-  prefix: '/api',
-});
+const routes = require('koa-router')();
 
 let counter = 0;
 

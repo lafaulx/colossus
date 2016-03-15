@@ -4,14 +4,9 @@ import webpack from 'webpack';
 
 import config from './local_config';
 
-const queryObject = {
-  presets: [require.resolve('babel-preset-es2015'), require.resolve('babel-preset-react')],
-};
-const query = require('querystring').stringify(queryObject);
-
 export default {
   context: path.join(process.cwd(), 'src'),
-  entry: ['webpack/hot/only-dev-server', './js/app'],
+  entry: ['webpack/hot/dev-server', './js/app'],
   debug: true,
   devtool: 'eval',
   output: {
@@ -33,7 +28,10 @@ export default {
     loaders: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      loaders: ['react-hot', `babel?${query}`],
+      loader: 'babel',
+      query: {
+        presets: ['es2015', 'react'],
+      },
     }, {
       test: /\.scss$/,
       loader: 'style!css?-minimize!postcss!sass',
