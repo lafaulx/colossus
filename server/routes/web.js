@@ -13,7 +13,7 @@ const RouterContext = ReactRouter.RouterContext;
 
 module.exports = function *ssr() {
   const body = yield new Promise((resolve) => {
-    match({ routes, location: this.url || '/' }, (err, redirect, props) => {
+    match({ routes, location: this.url }, (err, redirect, props) => {
       const handlerFactory = React.createFactory(RouterContext);
 
       resolve(renderToString(handlerFactory(props)));

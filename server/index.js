@@ -22,7 +22,6 @@ const app = koa();
 
 app.context.render = koaNunjucks({
   ext: 'html',
-  writeResponse: false,
   path: path.join(__dirname, '..', '/build'),
   nunjucksConfig: {
     tags: {
@@ -36,10 +35,11 @@ app.context.render = koaNunjucks({
   },
 });
 
-app.use(koaStatic(config.BUILD_PATH));
 app.use(koaBunyanLogger(logger));
+
 app.use(mount('/api', apiRoutes.routes()));
 app.use(webRoutes);
+app.use(koaStatic(config.BUILD_PATH));
 
 app.listen(config.NODEJS_PORT);
 logger.info(`Listening to ${config.NODEJS_ADDR}:${config.NODEJS_PORT}`);
