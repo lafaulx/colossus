@@ -1,5 +1,5 @@
 # Colossus
-This is a biolerplate which gathers the latest and more or less stable React-related components in one place to deliver universal SPA concept for real world. Main buzzwords for SEO: [react](https://github.com/facebook/react), [redux](https://github.com/reactjs/redux) [react-router](https://github.com/reactjs/react-router), [react-redux-router](https://github.com/reactjs/react-router-redux) – for full reference check `package.json`.
+This is a biolerplate which gathers the latest and more or less stable React-related components in one place to deliver universal SPA concept for real world. Main buzzwords for SEO: [react](https://github.com/facebook/react), [redux](https://github.com/reactjs/redux), [react-router](https://github.com/reactjs/react-router), [react-redux-router](https://github.com/reactjs/react-router-redux) – for full list check `package.json`.
 
 ## WTF?
 My goal was to create a clear and simple architecture which supports both async Redux actions, client-side routing and server-side rendering and here's brief story that covers the main parts.
