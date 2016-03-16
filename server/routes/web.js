@@ -1,3 +1,5 @@
+'use strict';
+
 require('babel-register')({
   presets: ['es2015', 'react'],
 });
@@ -11,6 +13,7 @@ const syncHistoryWithStore = require('react-router-redux').syncHistoryWithStore;
 
 const routes = require('../../src/js/routes').default;
 const configureStore = require('../../src/js/store').configureStore;
+const performContainerStaticMethod = require('../../src/js/utils/performContainerStaticMethod').default;
 
 const match = ReactRouter.match;
 const RouterContext = ReactRouter.RouterContext;
@@ -18,7 +21,7 @@ const createMemoryHistory = ReactRouter.createMemoryHistory;
 
 module.exports = function *ssr() {
   const memoryHistory = createMemoryHistory(this.url);
-  const store = configureStore(memoryHistory);
+  let store = configureStore(memoryHistory);
   const history = syncHistoryWithStore(memoryHistory, store);
 
   const data = yield new Promise((resolve) => {
@@ -26,13 +29,17 @@ module.exports = function *ssr() {
       const providerFactory = React.createFactory(Provider);
       const routerContextFactory = React.createFactory(RouterContext);
 
-      const body = renderToString(providerFactory({
-        store,
-      }, routerContextFactory(renderProps)));
+      performContainerStaticMethod(renderProps, store, `${this.protocol}://${this.host}`).then(() => {
+        store = configureStore(memoryHistory, store.getState());
 
-      resolve({
-        body,
-        state: serialize(store.getState()),
+        const body = renderToString(providerFactory({
+          store,
+        }, routerContextFactory(renderProps)));
+
+        resolve({
+          body,
+          state: serialize(store.getState()),
+        });
       });
     });
   });
