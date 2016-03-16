@@ -22,9 +22,7 @@ const mapStateToProps = (state) => ({
   counter: state.counter,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onIncrement: () => {dispatch(increment);},
-  onDecrement: () => {dispatch(decrement);},
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default connect(mapStateToProps, {
+  onIncrement: increment,
+  onDecrement: decrement,
+})(Counter);

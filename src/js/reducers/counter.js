@@ -4,15 +4,10 @@ import {
   COUNTER_DECREMENT,
 } from '../actions/counter';
 
-export default function counter(state = 0, action) {
-  switch (action.type) {
-    case COUNTER_GET:
-      return action.data;
-    case COUNTER_INCREMENT:
-      return action.data;
-    case COUNTER_DECREMENT:
-      return action.data;
-    default:
-      return state;
-  }
-}
+import { handleActions } from 'redux-actions';
+
+export default handleActions({
+  [COUNTER_GET]: (state, action) => action.payload,
+  [COUNTER_INCREMENT]: (state, action) => action.payload,
+  [COUNTER_DECREMENT]: (state, action) => action.payload,
+}, 0);

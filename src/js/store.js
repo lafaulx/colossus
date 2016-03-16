@@ -1,5 +1,4 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import loggerMiddleware from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
 import counterReducer from './reducers/counter';
@@ -16,10 +15,8 @@ export function configureStore(history, initialState) {
     reducer,
     initialState,
     applyMiddleware(
-      routerMiddleware(history),
-      thunkMiddleware,
       promiseMiddleware,
-      loggerMiddleware
+      routerMiddleware(history)
     )
   );
 
