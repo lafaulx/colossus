@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, browserHistory } from 'react-router';
+import { browserHistory, Router, match } from 'react-router';
 import { Provider } from 'react-redux';
-import { configureStore } from './store';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import routes from './routes';
+import { configureStore } from './store';
+import performContainerStaticMethod from './utils/performContainerStaticMethod';
 
 require('../css/app');
 
@@ -17,4 +18,10 @@ ReactDOM.render(
     <Router routes={routes} history={history} />
   </Provider>,
   document.getElementById('app')
+);
+
+history.listen((location) =>
+  match({ history, routes, location: location.path }, (error, redirectLocation, renderProps) =>
+    performContainerStaticMethod(renderProps, store, 'http://localhost:3000')
+  )
 );

@@ -7,10 +7,6 @@ class Counter extends Component {
     return store.dispatch(get());
   }
 
-  componentDidMount() {
-    this.props.dispatch(get());
-  }
-
   render() {
     const { counter, dispatch } = this.props;
 

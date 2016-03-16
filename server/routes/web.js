@@ -21,7 +21,7 @@ const createMemoryHistory = ReactRouter.createMemoryHistory;
 
 module.exports = function *ssr() {
   const memoryHistory = createMemoryHistory(this.url);
-  let store = configureStore(memoryHistory);
+  const store = configureStore(memoryHistory);
   const history = syncHistoryWithStore(memoryHistory, store);
 
   const data = yield new Promise((resolve) => {
@@ -30,8 +30,6 @@ module.exports = function *ssr() {
       const routerContextFactory = React.createFactory(RouterContext);
 
       performContainerStaticMethod(renderProps, store, `${this.protocol}://${this.host}`).then(() => {
-        store = configureStore(memoryHistory, store.getState());
-
         const body = renderToString(providerFactory({
           store,
         }, routerContextFactory(renderProps)));

@@ -1,5 +1,4 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
 import counterReducer from './reducers/counter';
 
