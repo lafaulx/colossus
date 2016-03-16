@@ -1,18 +1,20 @@
 'use strict';
 
-const routes = require('koa-router')();
+const express = require('express');
+const router = express.Router();
 
 let counter = 0;
 
-routes
-.get('/counter', function *api() {
-  this.body = counter;
-})
-.get('/counter/increment', function *api() {
-  this.body = ++counter;
-})
-.get('/counter/decrement', function *api() {
-  this.body = --counter;
+router.get('/counter', function(req, res) {
+  res.send({ counter });
 });
 
-module.exports = routes;
+router.get('/counter/increment', function(req, res) {
+  res.send({ counter: ++counter });
+});
+
+router.get('/counter/decrement', function(req, res) {
+  res.send({ counter: --counter });
+});
+
+module.exports = router;

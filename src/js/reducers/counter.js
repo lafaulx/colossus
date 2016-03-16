@@ -7,7 +7,7 @@ import {
 import { handleActions } from 'redux-actions';
 
 export default handleActions({
-  [COUNTER_GET]: (state, action) => action.payload,
-  [COUNTER_INCREMENT]: (state, action) => action.payload,
-  [COUNTER_DECREMENT]: (state, action) => action.payload,
+  [COUNTER_GET]: (state, action) => action.payload.counter,
+  [COUNTER_INCREMENT]: (state, action) => action.payload.counter,
+  [COUNTER_DECREMENT]: (state, action) => action.payload.counter,
 }, 0);
