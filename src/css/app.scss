@@ -1,7 +1,14 @@
-body {
-  margin: 0;
+nav {
+  a {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  a:last-of-type {
+    margin-right: 0;
+  }
 }
 
 .active {
-  color: pink;
+  color: red;
 }

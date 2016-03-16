@@ -12,9 +12,15 @@ class Counter extends Component {
 
     return (
       <div>
-        Counter: {counter}
-        <button onClick={function onIncrementClick() { dispatch(increment()); }}>Increment</button>
-        <button onClick={function onDecrementClick() { dispatch(decrement()); }}>Decrement</button>
+        <h3>Counter: <strong>{counter}</strong></h3>
+        <div>
+          <button onClick={function onIncrementClick() { dispatch(increment()); }}>
+            increment
+          </button>
+          <button onClick={function onDecrementClick() { dispatch(decrement()); }}>
+            decrement
+          </button>
+        </div>
       </div>
     );
   }

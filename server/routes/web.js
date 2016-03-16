@@ -29,7 +29,7 @@ module.exports = function *ssr() {
       const providerFactory = React.createFactory(Provider);
       const routerContextFactory = React.createFactory(RouterContext);
 
-      performContainerStaticMethod(renderProps, store, `${this.protocol}://${this.host}`).then(() => {
+      performContainerStaticMethod(renderProps, store).then(() => {
         const body = renderToString(providerFactory({
           store,
         }, routerContextFactory(renderProps)));

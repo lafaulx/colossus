@@ -6,10 +6,10 @@ export default function App(props) {
   return (
     <div>
       <h1>Colossus</h1>
-      <ul role="nav">
-        <li><IndexLink to="/" activeClassName="active">Index</IndexLink></li>
-        <li><Link to="counter" activeClassName="active">Counter</Link></li>
-      </ul>
+      <nav>
+        <IndexLink to="/" activeClassName="active">Index</IndexLink>
+        <Link to="/counter" activeClassName="active">Counter</Link>
+      </nav>
 
       {props.children}
     </div>
