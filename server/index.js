@@ -2,10 +2,11 @@
 
 const createLogger = require('bunyan').createLogger;
 const koa = require('koa');
-const koaStatic = require('koa-static');
 const koaBunyanLogger = require('koa-bunyan-logger');
 const mount = require('koa-mount');
 const koaNunjucks = require('koa-nunjucks-2');
+const serve = require('koa-static-server');
+const favicon = require('koa-favicon');
 const path = require('path');
 
 const config = require('../local_config');
@@ -23,7 +24,7 @@ const app = koa();
 
 app.context.render = koaNunjucks({
   ext: 'html',
-  path: path.join(__dirname, '..', '/build'),
+  path: config.BUILD_PATH,
   nunjucksConfig: {
     tags: {
       blockStart: '<%',
@@ -38,9 +39,10 @@ app.context.render = koaNunjucks({
 
 app.use(koaBunyanLogger(logger));
 
+app.use(serve({ rootDir: path.join(config.BUILD_PATH, '/assets'), rootPath: '/assets' }));
+app.use(favicon(path.join(config.BUILD_PATH, '/favicon.ico')));
 app.use(mount('/api', apiRoutes.routes()));
 app.use(webRoutes);
-app.use(koaStatic(config.BUILD_PATH));
 
 app.listen(config.NODEJS_PORT);
 logger.info(`Listening to ${config.NODEJS_ADDR}:${config.NODEJS_PORT}`);

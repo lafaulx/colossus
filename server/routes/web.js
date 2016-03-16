@@ -19,7 +19,7 @@ const match = ReactRouter.match;
 const RouterContext = ReactRouter.RouterContext;
 const createMemoryHistory = ReactRouter.createMemoryHistory;
 
-module.exports = function *ssr() {
+module.exports = function *ssr(next) {
   const memoryHistory = createMemoryHistory(this.url);
   const store = configureStore(memoryHistory);
   const history = syncHistoryWithStore(memoryHistory, store);
@@ -29,21 +29,36 @@ module.exports = function *ssr() {
       const providerFactory = React.createFactory(Provider);
       const routerContextFactory = React.createFactory(RouterContext);
 
-      performContainerStaticMethod(renderProps, store).then(() => {
-        const body = renderToString(providerFactory({
-          store,
-        }, routerContextFactory(renderProps)));
+      if (error) {
+        resolve({ status: 500, message: error.message }).status(500).send(error.message);
+      } else if (redirectLocation) {
+        resolve({ status: 302, location: redirectLocation.pathname + redirectLocation.search });
+      } else if (renderProps) {
+        performContainerStaticMethod(renderProps, store).then(() => {
+          const body = renderToString(providerFactory({
+            store,
+          }, routerContextFactory(renderProps)));
 
-        resolve({
-          body,
-          state: serialize(store.getState()),
+          resolve({
+            status: 200,
+            body,
+            state: serialize(store.getState()),
+          });
         });
-      });
+      } else {
+        resolve({ status: 404 });
+      }
     });
   });
 
-  yield this.render('index', {
-    body: data.body,
-    state: data.state,
-  });
+  switch (data.status) {
+    case 200: yield this.render('index', {
+      body: data.body,
+      state: data.state,
+    }); break;
+    case 302: this.redirect(data.location); break;
+    case 404: yield next; break;
+    case 500: this.throw(data.message, 500); break;
+    default: yield next;
+  }
 };
