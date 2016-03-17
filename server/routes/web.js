@@ -26,16 +26,7 @@ const match = ReactRouter.match;
 const RouterContext = ReactRouter.RouterContext;
 const createMemoryHistory = ReactRouter.createMemoryHistory;
 
-nunjucks.configure(config.BUILD_PATH, {
-  tags: {
-    blockStart: '<%',
-    blockEnd: '%>',
-    variableStart: '%%',
-    variableEnd: '%%',
-    commentStart: '<#',
-    commentEnd: '#>',
-  },
-});
+nunjucks.configure(path.join(process.cwd(), '/views'));
 
 router.get('/*', function(req, res) {
   const memoryHistory = createMemoryHistory(req.url);

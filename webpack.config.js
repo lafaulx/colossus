@@ -1,17 +1,15 @@
-import autoprefixer from 'autoprefixer';
-import path from 'path';
-import webpack from 'webpack';
+const autoprefixer = require('autoprefixer');
+const path = require('path');
 
-import config from './local_config';
+const config = require('./local_config');
 
-export default {
+module.exports = {
   context: path.join(process.cwd(), 'src'),
-  entry: ['webpack/hot/dev-server', './js/app'],
-  debug: true,
-  devtool: 'eval',
+  entry: ['./js/app'],
+  devtool: 'inline-source-map',
   output: {
-    path: path.join(config.BUILD_PATH, 'static'),
-    publicPath: `http://localhost:${config.DEV_SERVER_PORT}/static/`,
+    path: config.BUILD_PATH,
+    publicPath: '/static/',
     filename: 'app.js',
   },
 
@@ -37,14 +35,6 @@ export default {
       loader: 'style!css?-minimize!postcss!sass',
     }],
   },
-
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      __DEV__: true,
-    }),
-  ],
 
   postcss: [autoprefixer({
     browsers: ['last 2 version'],

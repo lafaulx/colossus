@@ -10,13 +10,13 @@ After this brief intro feel free to check the code itself – it most probably d
 
 
 ## How to run this stuff?
-  - `npm install -g gulp supervisor`
+  - `npm install -g supervisor`
   - `npm install`
-  - `npm start` in one tab, `gulp` in the other
+  - `npm start`
   - go to localhost:3000
 
 ## TODO
 This is a very raw but working setup and I want to imporove some things:
   - add more meaningful example;
-  - add proper gulp build script for dev and prod environments;
+  - add scripts for dev and prod environments;
   - move CSS things to JS world.
