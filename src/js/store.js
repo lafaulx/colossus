@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import promiseMiddleware from 'redux-promise';
 import counterReducer from './reducers/counter';
+import { apiMiddleware } from 'redux-api-middleware';
 
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 
@@ -14,7 +14,7 @@ export function configureStore(history, initialState) {
     reducer,
     initialState,
     applyMiddleware(
-      promiseMiddleware,
+      apiMiddleware,
       routerMiddleware(history)
     )
   );
