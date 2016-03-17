@@ -1,14 +1,17 @@
 const autoprefixer = require('autoprefixer');
 const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = require('./local_config');
 
-module.exports = {
+module.exports = [{
+  name: 'client',
   context: path.join(process.cwd(), 'src'),
-  entry: ['./js/app'],
+  entry: ['./js/app.client'],
   devtool: 'inline-source-map',
   output: {
-    path: config.BUILD_PATH,
+    path: path.join(config.BUILD_PATH, 'client'),
     publicPath: '/static/',
     filename: 'app.js',
   },
@@ -32,7 +35,10 @@ module.exports = {
       },
     }, {
       test: /\.scss$/,
-      loader: 'style!css?-minimize!postcss!sass',
+      loader: ExtractTextPlugin.extract(
+        'style',
+        'css?-minimize!postcss!sass'
+      ),
     }],
   },
 
@@ -40,4 +46,51 @@ module.exports = {
     browsers: ['last 2 version'],
     remove: false,
   })],
-};
+
+  plugins: [
+    new ExtractTextPlugin('app.css'),
+  ],
+}, {
+  name: 'server',
+  context: path.join(process.cwd(), 'src'),
+  entry: ['./js/app.server'],
+  output: {
+    path: path.join(config.BUILD_PATH, 'server'),
+    publicPath: '/static/',
+    filename: 'app.js',
+    libraryTarget: 'commonjs2',
+  },
+
+  resolve: {
+    modulesDirectories: [
+      'node_modules',
+      'src/js',
+      'src/css',
+    ],
+    extensions: ['', '.js', '.scss'],
+  },
+
+  externals: /^[a-z\-0-9]+$/,
+
+  module: {
+    loaders: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'babel',
+      query: {
+        presets: ['es2015', 'react'],
+      },
+    }],
+  },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.API_ORIGIN': `"${config.API_ORIGIN}"`,
+    }),
+  ],
+
+  postcss: [autoprefixer({
+    browsers: ['last 2 version'],
+    remove: false,
+  })],
+}];

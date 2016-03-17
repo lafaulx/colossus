@@ -6,10 +6,6 @@ const loggerMiddleware = require('bunyan-middleware');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpack = require('webpack');
-const webpackConfig = require('../webpack.config');
-
 const config = require('../local_config');
 const apiRoutes = require('./routes/api');
 const webRoutes = require('./routes/web');
@@ -27,15 +23,8 @@ app.use(loggerMiddleware({ logger }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/static', express.static(config.BUILD_PATH));
+app.use('/static', express.static(`${config.BUILD_PATH}/client`));
 app.use('/static', express.static(`${__dirname}/static`));
-
-app.use(webpackDevMiddleware(webpack(webpackConfig), {
-  publicPath: '/static/',
-  stats: {
-    colors: true,
-  },
-}));
 
 app.use('/api', apiRoutes);
 app.use('/', webRoutes);
