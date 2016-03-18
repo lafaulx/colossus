@@ -10,7 +10,7 @@ After this brief intro feel free to check the code itself – it most probably d
 
 
 ## How to run this stuff?
-  - `npm install -g supervisor`
+  - `npm install -g webpack`
   - `npm install`
   - `npm start`
   - go to localhost:3000
