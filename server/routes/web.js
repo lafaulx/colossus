@@ -16,7 +16,6 @@ router.get('/*', function onRequest(req, res) {
 
     switch (status) {
       case 301: res.redirect(data.url); break;
-      case 404: res.sendStatus(404); break;
       case 500: res.status(500).send(data.message); break;
       default: res.sendStatus(500);
     }

@@ -58,10 +58,6 @@ export function renderApp(url) {
 
           resolve(`<!doctype html>\n${html}`);
         });
-      } else {
-        reject({
-          status: 404,
-        });
       }
     });
   });
