@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { renderToString } from 'react-dom/server';
 import serialize from 'serialize-javascript';
 import { RouterContext, match, createMemoryHistory } from 'react-router';
@@ -8,6 +8,41 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
 import { configureStore } from './store';
 import performContainerStaticMethod from './utils/performContainerStaticMethod';
+import CriticalError from './containers/CriticalError';
+
+function Html({ store, content, isError }) {
+  return (
+    <html>
+      <head>
+        <meta charSet="utf-8" />
+        <title>Colossus</title>
+
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui" />
+        <link href="/static/app.css" rel="stylesheet" />
+        {!isError &&
+          <script dangerouslySetInnerHTML={{
+            __html: `window.__initialState__ = ${serialize(store.getState())};`,
+          }}
+          />
+        }
+      </head>
+      <body>
+        <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
+
+        {!isError &&
+          <script src="/static/app.js" />
+        }
+      </body>
+    </html>
+  );
+}
+
+Html.propTypes = {
+  store: PropTypes.object,
+  content: PropTypes.string,
+  isError: PropTypes.boolean,
+};
 
 export function renderApp(url) {
   const memoryHistory = createMemoryHistory(url);
@@ -17,10 +52,10 @@ export function renderApp(url) {
   return new Promise((resolve, reject) => {
     match({ history, routes, location: url }, (error, redirectLocation, renderProps) => {
       if (error) {
-        reject({
-          status: 500,
-          message: error.message,
-        });
+        const content = renderToString(<Error message={error.message} />);
+        const htmlString = renderToString(<Html isError content={content} />);
+
+        resolve(htmlString);
       } else if (redirectLocation) {
         reject({
           status: 301,
@@ -33,30 +68,9 @@ export function renderApp(url) {
               <RouterContext {...renderProps} />
             </Provider>
           );
+          const htmlString = renderToString(<Html content={content} store={store} />);
 
-          const html = renderToString(
-            <html>
-              <head>
-                <meta charSet="utf-8" />
-                <title>Colossus</title>
-
-                <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui" />
-                <link href="/static/app.css" rel="stylesheet" />
-                <script dangerouslySetInnerHTML={{
-                  __html: `window.__initialState__ = ${serialize(store.getState())};`,
-                }}
-                />
-              </head>
-              <body>
-                <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
-
-                <script src="/static/app.js" />
-              </body>
-            </html>
-          );
-
-          resolve(`<!doctype html>\n${html}`);
+          resolve(`<!doctype html>\n${htmlString}`);
         });
       }
     });
