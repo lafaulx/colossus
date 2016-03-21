@@ -14,6 +14,10 @@ export const COUNTER_DECREMENT = 'COUNTER_DECREMENT';
 export const COUNTER_DECREMENT_OK = 'COUNTER_DECREMENT_OK';
 export const COUNTER_DECREMENT_FAIL = 'COUNTER_DECREMENT_FAIL';
 
+export const COUNTER_BAD = 'COUNTER_BAD';
+export const COUNTER_BAD_OK = 'COUNTER_BAD_OK';
+export const COUNTER_BAD_FAIL = 'COUNTER_BAD_FAIL';
+
 /*
  * action creators
  */
@@ -36,5 +40,12 @@ export const decrement = () => ({
     endpoint: prepareURL('/api/counter/decrement'),
     method: 'GET',
     types: [COUNTER_DECREMENT, COUNTER_DECREMENT_OK, COUNTER_DECREMENT_FAIL],
+  },
+});
+export const bad = () => ({
+  [CALL_API]: {
+    endpoint: prepareURL('/api/counter/bad'),
+    method: 'GET',
+    types: [COUNTER_BAD, COUNTER_BAD_OK, COUNTER_BAD_FAIL],
   },
 });
