@@ -17,4 +17,8 @@ router.get('/counter/decrement', function(req, res) {
   res.send({ counter: --counter });
 });
 
+router.get('/*', function(req, res) {
+  res.sendStatus(404);
+});
+
 module.exports = router;

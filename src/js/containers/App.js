@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import { Link, IndexLink } from 'react-router';
 
-export default function App(props) {
+function App({ children }) {
   return (
     <div>
       <h1>Colossus</h1>
@@ -11,11 +12,18 @@ export default function App(props) {
         <Link to="/counter" activeClassName="active">Counter</Link>
       </nav>
 
-      {props.children}
+      {children}
     </div>
   );
 }
 
 App.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.object.isRequired,
+  routing: PropTypes.object.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  routing: state.routing,
+});
+
+export default connect(mapStateToProps)(App);
