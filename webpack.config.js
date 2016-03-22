@@ -3,8 +3,11 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
+const StatsPlugin = require('stats-webpack-plugin');
 
 const config = require('./local_config');
+const BUILD_PATH = config.BUILD_PATH;
+const API_ORIGIN = config.API_ORIGIN;
 
 module.exports = [{
   name: 'client',
@@ -12,9 +15,9 @@ module.exports = [{
   entry: ['./js/app.client'],
   devtool: 'inline-source-map',
   output: {
-    path: path.join(config.BUILD_PATH, 'client'),
+    path: path.join(BUILD_PATH, 'client'),
     publicPath: '/static/',
-    filename: 'app.js',
+    filename: 'app.[hash].js',
   },
 
   resolve: {
@@ -49,14 +52,15 @@ module.exports = [{
   })],
 
   plugins: [
-    new ExtractTextPlugin('app.css'),
+    new ExtractTextPlugin('app.[hash].css'),
+    new StatsPlugin('../stats.json'),
   ],
 }, {
   name: 'server',
   context: path.join(process.cwd(), 'src'),
   entry: ['./js/app.server'],
   output: {
-    path: path.join(config.BUILD_PATH, 'server'),
+    path: path.join(BUILD_PATH, 'server'),
     publicPath: '/static/',
     filename: 'app.js',
     libraryTarget: 'commonjs2',
@@ -86,7 +90,7 @@ module.exports = [{
 
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.API_ORIGIN': `"${config.API_ORIGIN}"`,
+      'process.env.API_ORIGIN': `"${API_ORIGIN}"`,
     }),
   ],
 }, {
@@ -94,7 +98,7 @@ module.exports = [{
   context: path.join(process.cwd(), 'src'),
   entry: ['./js/app.error'],
   output: {
-    path: path.join(config.BUILD_PATH, 'error'),
+    path: path.join(BUILD_PATH, 'error'),
     filename: 'app.js',
     libraryTarget: 'umd',
   },
