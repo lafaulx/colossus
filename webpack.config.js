@@ -36,19 +36,10 @@ module.exports = [{
       },
     }],
   },
-<<<<<<< 96717f8fa0a3194bbb1c77607acf7368e41530ee
-
-  postcss: [autoprefixer({
-    browsers: ['last 2 version'],
-    remove: false,
-  })],
 
   plugins: [
-    new ExtractTextPlugin('app.[hash].css'),
     new StatsPlugin('../stats.json'),
   ],
-=======
->>>>>>> Solved CSS problem - added radium
 }, {
   name: 'server',
   context: path.join(process.cwd(), 'src'),
@@ -66,7 +57,7 @@ module.exports = [{
       'src/js',
       'src/css',
     ],
-    extensions: ['', '.js'],
+    extensions: ['', '.js', '.json'],
   },
 
   externals: /^[a-z\-0-9]+$/,
