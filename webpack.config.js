@@ -1,11 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
+const crypto = require('crypto');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
-const StatsPlugin = require('stats-webpack-plugin');
 
 const config = require('./local_config');
 const BUILD_PATH = config.BUILD_PATH;
 const API_ORIGIN = config.API_ORIGIN;
+
+const hash = crypto.randomBytes(20).toString('hex');
 
 module.exports = [{
   name: 'client',
@@ -15,7 +17,7 @@ module.exports = [{
   output: {
     path: path.join(BUILD_PATH, 'client'),
     publicPath: '/static/',
-    filename: 'app.[hash].js',
+    filename: `app.${hash}.js`,
   },
 
   resolve: {
@@ -36,10 +38,6 @@ module.exports = [{
       },
     }],
   },
-
-  plugins: [
-    new StatsPlugin('../stats.json'),
-  ],
 }, {
   name: 'server',
   context: path.join(process.cwd(), 'src'),
@@ -57,7 +55,7 @@ module.exports = [{
       'src/js',
       'src/css',
     ],
-    extensions: ['', '.js', '.json'],
+    extensions: ['', '.js'],
   },
 
   externals: /^[a-z\-0-9]+$/,
@@ -76,6 +74,7 @@ module.exports = [{
   plugins: [
     new webpack.DefinePlugin({
       'process.env.API_ORIGIN': `"${API_ORIGIN}"`,
+      'process.env.hash': `"${hash}"`,
     }),
   ],
 }, {

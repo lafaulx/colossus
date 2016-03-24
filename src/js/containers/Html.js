@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import serialize from 'serialize-javascript';
 
-import { hash } from 'json!../../../build/stats.json';
+const hash = process.env.hash;
 
 export default function Html({ store, content, isError }) {
   return (
