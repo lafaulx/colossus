@@ -12,7 +12,6 @@ export default function Html({ store, content, isError }) {
 
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui" />
-        <link href={`/static/app.${hash}.css`} rel="stylesheet" />
         {!isError &&
           <script dangerouslySetInnerHTML={{
             __html: `window.__initialState__ = ${serialize(store.getState())};`,

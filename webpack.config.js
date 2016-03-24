@@ -1,7 +1,5 @@
-const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
 
@@ -24,9 +22,8 @@ module.exports = [{
     modulesDirectories: [
       'node_modules',
       'src/js',
-      'src/css',
     ],
-    extensions: ['', '.js', '.scss'],
+    extensions: ['', '.js'],
   },
 
   module: {
@@ -37,14 +34,9 @@ module.exports = [{
       query: {
         presets: ['es2015', 'react'],
       },
-    }, {
-      test: /\.scss$/,
-      loader: ExtractTextPlugin.extract(
-        'style',
-        'css?-minimize!postcss!sass'
-      ),
     }],
   },
+<<<<<<< 96717f8fa0a3194bbb1c77607acf7368e41530ee
 
   postcss: [autoprefixer({
     browsers: ['last 2 version'],
@@ -55,6 +47,8 @@ module.exports = [{
     new ExtractTextPlugin('app.[hash].css'),
     new StatsPlugin('../stats.json'),
   ],
+=======
+>>>>>>> Solved CSS problem - added radium
 }, {
   name: 'server',
   context: path.join(process.cwd(), 'src'),
