@@ -33,6 +33,11 @@ export function renderApp(url) {
           const htmlString = renderToString(<Html content={content} store={store} />);
 
           resolve(`<!doctype html>\n${htmlString}`);
+        }, () => {
+          reject();
+        })
+        .catch(() => {
+          reject();
         });
       }
     });

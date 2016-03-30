@@ -18,4 +18,4 @@ After this brief intro feel free to check the code itself – it most probably d
 ## TODO
 This is a very raw but working setup and I want to imporove some things:
   - add scripts for dev and prod environments
-  - fix static promise error fallback
+  - fix radium SSR warning

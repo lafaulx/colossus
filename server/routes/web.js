@@ -19,6 +19,9 @@ router.get('/*', function onRequest(req, res) {
       case 301: res.redirect(data.url); break;
       default: res.sendFile(errorHtmlPath);
     }
+  })
+  .catch(function() {
+    res.sendFile(errorHtmlPath);
   });
 });
 
