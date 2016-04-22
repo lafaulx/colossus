@@ -29,7 +29,9 @@ function App({ children, location }, { router: { isActive } }) {
       <h1>Colossus</h1>
       <nav>
         <WLink to="/" style={[base, isActive('/', true) ? active : undefined]}>Index</WLink>
-        <WLink to="/counter" style={[base, last, isActive('/counter') ? active : undefined]}>Counter</WLink>
+        <WLink to="/counter" style={[base, last, isActive('/counter') ? active : undefined]}>
+          Counter
+        </WLink>
       </nav>
 
       {children}

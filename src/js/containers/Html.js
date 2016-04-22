@@ -1,9 +1,19 @@
 import React, { PropTypes } from 'react';
 import serialize from 'serialize-javascript';
+import radium, { Style } from 'radium';
 
 const hash = process.env.hash;
 
-export default function Html({ store, content, isError }) {
+const globalStyles = {
+  body: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 0,
+    fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
+  },
+};
+
+function Html({ store, content, isError }) {
   return (
     <html>
       <head>
@@ -18,6 +28,8 @@ export default function Html({ store, content, isError }) {
           }}
           />
         }
+
+        <Style rules={globalStyles} />
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
@@ -35,3 +47,6 @@ Html.propTypes = {
   content: PropTypes.string,
   isError: PropTypes.bool,
 };
+
+export default radium(Html);
+

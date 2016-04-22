@@ -33,7 +33,7 @@ export function renderApp(url, ua) {
               </RadiumWrapper>
             </Provider>
           );
-          const htmlString = renderToString(<Html content={content} store={store} />);
+          const htmlString = renderToString(<Html content={content} store={store} radiumConfig={{ userAgent: ua }} />);
 
           resolve(`<!doctype html>\n${htmlString}`);
         }, () => {
