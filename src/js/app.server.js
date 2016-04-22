@@ -8,8 +8,9 @@ import routes from './routes';
 import { configureStore } from './store';
 import performContainerStaticMethod from './utils/performContainerStaticMethod';
 import Html from './containers/Html';
+import RadiumWrapper from './helpers/RadiumWrapper';
 
-export function renderApp(url) {
+export function renderApp(url, ua) {
   return new Promise((resolve, reject) => {
     const memoryHistory = createMemoryHistory(url);
     const store = configureStore(memoryHistory);
@@ -27,7 +28,9 @@ export function renderApp(url) {
         performContainerStaticMethod(renderProps, store).then(() => {
           const content = renderToString(
             <Provider store={store}>
-              <RouterContext {...renderProps} />
+              <RadiumWrapper radiumConfig={{ userAgent: ua }}>
+                <RouterContext {...renderProps} />
+              </RadiumWrapper>
             </Provider>
           );
           const htmlString = renderToString(<Html content={content} store={store} />);

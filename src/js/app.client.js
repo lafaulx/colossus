@@ -7,13 +7,16 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
 import { configureStore } from './store';
 import performContainerStaticMethod from './utils/performContainerStaticMethod';
+import RadiumWrapper from './helpers/RadiumWrapper';
 
 const store = configureStore(browserHistory, window.__initialState__);
 const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router routes={routes} history={history} />
+    <RadiumWrapper>
+      <Router routes={routes} history={history} />
+    </RadiumWrapper>
   </Provider>,
   document.getElementById('app')
 );

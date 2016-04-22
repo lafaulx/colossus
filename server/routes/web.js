@@ -9,7 +9,7 @@ const renderApp = require(`${config.BUILD_PATH}/server/app`).renderApp;
 const errorHtmlPath = `${config.BUILD_PATH}/error/error.html`;
 
 router.get('/*', function onRequest(req, res) {
-  renderApp(req.url)
+  renderApp(req.url, req.headers['user-agent'])
   .then(function onSuccess(html) {
     res.send(html);
   }, function onError(data) {
