@@ -34,9 +34,9 @@ export function renderApp(url, ua) {
               </RadiumWrapper>
             </Provider>
           );
-          const htmlString = renderToString(<Html content={content} store={store} radiumConfig={{ userAgent: ua }} />);
 
-          DocumentTitle.rewind();
+          const title = DocumentTitle.rewind();
+          const htmlString = renderToString(<Html title={title} content={content} store={store} radiumConfig={{ userAgent: ua }} />);
 
           resolve(`<!doctype html>\n${htmlString}`);
         }, (e) => {
