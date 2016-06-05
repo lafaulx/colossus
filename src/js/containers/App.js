@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import radium from 'radium';
+import DocumentTitle from 'react-document-title';
 
 import { Link } from 'react-router';
 
@@ -25,17 +26,19 @@ function App({ children, location }, { router: { isActive } }) {
   const { link: { base, last, active } } = styles;
 
   return (
-    <div>
-      <h1>Colossus</h1>
-      <nav>
-        <WLink to="/" style={[base, isActive('/', true) ? active : undefined]}>Index</WLink>
-        <WLink to="/counter" style={[base, last, isActive('/counter') ? active : undefined]}>
-          Counter
-        </WLink>
-      </nav>
+    <DocumentTitle title="Colossus">
+      <div>
+        <h1>Colossus</h1>
+        <nav>
+          <WLink to="/" style={[base, isActive('/', true) ? active : undefined]}>Index</WLink>
+          <WLink to="/counter" style={[base, last, isActive('/counter') ? active : undefined]}>
+            Counter
+          </WLink>
+        </nav>
 
-      {children}
-    </div>
+        {children}
+      </div>
+    </DocumentTitle>
   );
 }
 

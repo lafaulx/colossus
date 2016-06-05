@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { RouterContext, match, createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
+import DocumentTitle from 'react-document-title';
 
 import routes from './routes';
 import { configureStore } from './store';
@@ -35,12 +36,14 @@ export function renderApp(url, ua) {
           );
           const htmlString = renderToString(<Html content={content} store={store} radiumConfig={{ userAgent: ua }} />);
 
+          DocumentTitle.rewind();
+
           resolve(`<!doctype html>\n${htmlString}`);
-        }, () => {
-          reject();
+        }, (e) => {
+          reject(e);
         })
-        .catch(() => {
-          reject();
+        .catch((e) => {
+          reject(e);
         });
       }
     });
