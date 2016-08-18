@@ -3,20 +3,20 @@ import ReactDOM from 'react-dom';
 import { browserHistory, Router, match } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
+import { StyleRoot } from 'radium';
 
 import routes from './routes';
 import { configureStore } from './store';
 import performContainerStaticMethod from './utils/performContainerStaticMethod';
-import RadiumWrapper from './helpers/RadiumWrapper';
 
 const store = configureStore(browserHistory, window.__initialState__);
 const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <RadiumWrapper>
+    <StyleRoot>
       <Router routes={routes} history={history} />
-    </RadiumWrapper>
+    </StyleRoot>
   </Provider>,
   document.getElementById('app')
 );
