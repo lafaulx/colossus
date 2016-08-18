@@ -23,3 +23,5 @@ This is a very raw but working setup and I want to imporove some things:
   - add pure component render
   - add tests
   - normal linting
+  - add redux dev tools
+  - remove redux logger on server
