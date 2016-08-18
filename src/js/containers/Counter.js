@@ -9,7 +9,8 @@ class Counter extends Component {
   }
 
   render() {
-    const { counter: { value, isLoading, isError }, dispatch } = this.props;
+    const { counter, dispatch } = this.props;
+    const { value, isLoading, isError } = counter.toJS();
 
     return (
       <DocumentTitle title="Colossus – Counter">

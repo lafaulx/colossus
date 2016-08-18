@@ -25,6 +25,7 @@
     "bunyan-middleware": "^0.3.1",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
+    "immutable": "^3.8.1",
     "json-loader": "^0.5.4",
     "object-assign": "^4.0.1",
     "radium": "^0.18.1",

@@ -46,7 +46,7 @@ Html.propTypes = {
   store: PropTypes.object,
   content: PropTypes.string,
   isError: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 export default radium(Html);
-
