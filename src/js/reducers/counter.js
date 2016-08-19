@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import Immutable from 'immutable';
 
 import {
   COUNTER_GET,
@@ -12,14 +12,13 @@ import {
   COUNTER_DECREMENT,
   COUNTER_DECREMENT_OK,
   COUNTER_DECREMENT_FAIL,
-
-  COUNTER_BAD,
-  COUNTER_BAD_FAIL,
 } from '../actions/counter';
 
 import { handleActions } from 'redux-actions';
 
-const initialState = Map({
+const map = Immutable.Map;
+
+const initialState = map({
   value: 0,
   isLoading: true,
   isError: false,
@@ -58,13 +57,6 @@ export default handleActions({
     .set('isError', false)
     .set('value', action.payload.counter),
   [COUNTER_DECREMENT_FAIL]: (state) =>
-    state
-    .set('isLoading', false)
-    .set('isError', true),
-
-  [COUNTER_BAD]: (state) =>
-    state.set('isLoading', true),
-  [COUNTER_BAD_FAIL]: (state) =>
     state
     .set('isLoading', false)
     .set('isError', true),

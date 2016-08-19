@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
 
-export default function Index() {
+export default function IndexPage() {
   return (
     <DocumentTitle title="Colossus – Index">
       <div>
