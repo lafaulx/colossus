@@ -20,7 +20,7 @@ const map = Immutable.Map;
 
 const initialState = map({
   value: 0,
-  isLoading: true,
+  isLoading: false,
   isError: false,
 });
 
