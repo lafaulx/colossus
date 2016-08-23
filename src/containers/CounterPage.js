@@ -6,36 +6,32 @@ import DocumentTitle from 'react-document-title';
 import { get, increment, decrement } from '../actions/counter';
 import Counter from '../components/Counter';
 
-class CounterPage extends Component {
-  static fetchData({ store }) {
-    return store.dispatch(get());
-  }
+function CounterPage({ counter, dispatch }) {
+  const boundActionCreators = bindActionCreators({
+    increment,
+    decrement,
+  }, dispatch);
 
-  render() {
-    const { counter, dispatch } = this.props;
-
-    const boundActionCreators = bindActionCreators({
-      increment,
-      decrement,
-    }, dispatch);
-
-    return (
-      <DocumentTitle title="Colossus – Counter">
-        <Counter
-          value={counter.get('value')}
-          isLoading={counter.get('isLoading')}
-          isError={counter.get('isError')}
-          {...boundActionCreators}
-        />
-      </DocumentTitle>
-    );
-  }
+  return (
+    <DocumentTitle title="Colossus – Counter">
+      <Counter
+        value={counter.get('value')}
+        isLoading={counter.get('isLoading')}
+        isError={counter.get('isError')}
+        {...boundActionCreators}
+      />
+    </DocumentTitle>
+  );
 }
 
 CounterPage.propTypes = {
   counter: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
+
+CounterPage.fetchData = function({ store }) {
+  return store.dispatch(get());
+}
 
 const mapStateToProps = (state) => ({
   counter: state.counter,
