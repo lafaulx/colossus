@@ -37,6 +37,12 @@ module.exports = [{
       },
     }],
   },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.JS_ENV': '"browser"',
+    }),
+  ],
 }, {
   name: 'server',
   context: path.join(process.cwd(), 'src'),
@@ -73,6 +79,7 @@ module.exports = [{
     new webpack.DefinePlugin({
       'process.env.API_ORIGIN': `"${API_ORIGIN}"`,
       'process.env.hash': `"${hash}"`,
+      'process.env.JS_ENV': '"node"',
     }),
   ],
 }];

@@ -20,14 +20,16 @@ export function configureStore(history, initialState) {
     }
   }
 
+  const middleware = [apiMiddleware, routerMiddleware(history)];
+
+  if (process.env.JS_ENV === 'browser') {
+    middleware.push(logger);
+  }
+
   const store = createStore(
     reducer,
     initialState,
-    applyMiddleware(
-      apiMiddleware,
-      routerMiddleware(history),
-      logger
-    )
+    applyMiddleware(...middleware)
   );
 
   return store;
