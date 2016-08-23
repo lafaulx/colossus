@@ -8,7 +8,7 @@ function Counter({ increment, decrement, value, isLoading, isError }) {
       }
 
       {!isLoading && !isError &&
-        <h3>Counter: <strong>{value}</strong></h3>
+        <h3>Counter: {value}</h3>
       }
 
       {isError &&
