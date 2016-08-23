@@ -16,8 +16,8 @@ import {
   COUNTER_DECREMENT,
   COUNTER_DECREMENT_OK,
   COUNTER_DECREMENT_FAIL,
-} from '../../src/js/actions/counter';
-import reducer from '../../src/js/reducers/counter';
+} from '../../src/actions/counter';
+import reducer from '../../src/reducers/counter';
 
 describe('Counter reducer', () => {
   it('should return the initial state', () => {

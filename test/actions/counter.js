@@ -16,7 +16,7 @@ import {
   get,
   increment,
   decrement
-} from '../../src/js/actions/counter';
+} from '../../src/actions/counter';
 
 const middlewares = [apiMiddleware];
 const mockStore = configureMockStore(middlewares);

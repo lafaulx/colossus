@@ -11,7 +11,7 @@ const hash = crypto.randomBytes(20).toString('hex');
 module.exports = [{
   name: 'client',
   context: path.join(process.cwd(), 'src'),
-  entry: ['./js/app.client'],
+  entry: ['./app.client'],
   devtool: 'inline-source-map',
   output: {
     path: path.join(BUILD_PATH, 'client'),
@@ -22,7 +22,7 @@ module.exports = [{
   resolve: {
     modulesDirectories: [
       'node_modules',
-      'src/js',
+      'src',
     ],
     extensions: ['', '.js'],
   },
@@ -40,7 +40,7 @@ module.exports = [{
 }, {
   name: 'server',
   context: path.join(process.cwd(), 'src'),
-  entry: ['./js/app.server'],
+  entry: ['./app.server'],
   output: {
     path: path.join(BUILD_PATH, 'server'),
     publicPath: '/static/',
@@ -51,8 +51,7 @@ module.exports = [{
   resolve: {
     modulesDirectories: [
       'node_modules',
-      'src/js',
-      'src/css',
+      'src',
     ],
     extensions: ['', '.js'],
   },

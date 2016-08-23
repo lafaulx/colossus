@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import objectAssign from 'object-assign';
 
-import Counter from '../../src/js/components/Counter';
+import Counter from '../../src/components/Counter';
 
 
 function setup(state) {
